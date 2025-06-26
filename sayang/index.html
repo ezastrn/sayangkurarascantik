@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Website</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #a66bbe, #6f42c1);
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1, h2 {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      padding: 10px 20px;
+    }
+
+    h1:hover, h2:hover {
+      transform: scale(1.05);
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .button {
+      background: white;
+      color: #6f42c1;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: #f3e6ff;
+    }
+
+    .float-img, .float-love {
+      position: absolute;
+      animation: float 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .float-img img, .float-love {
+      width: 100px;
+      border-radius: 20px;
+    }
+
+    .float-love {
+      font-size: 50px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    #guide {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #fddaff;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="step1">Selamat pagi sayang</h1>
+  <h2 id="step2" style="display: none;">Aku minta maaf sayangku, will u forgive me?</h2>
+  <div class="buttons" id="options" style="display: none;">
+    <button class="button" onclick="respond('yay')">Yay</button>
+    <button class="button" onclick="respond('nay')">Nay</button>
+  </div>
+  <h2 id="finalMsg" style="display: none;" onclick="playLoveScene()">I Love You So Much</h2>
+  <div id="guide">Pencet text di atas</div>
+
+  <audio id="romanticMusic" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" loop></audio>
+
+  <script>
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const options = document.getElementById("options");
+    const finalMsg = document.getElementById("finalMsg");
+    const guide = document.getElementById("guide");
+    const music = document.getElementById("romanticMusic");
+
+    step1.onclick = () => {
+      step1.style.display = "none";
+      step2.style.display = "block";
+    };
+
+    step2.onclick = () => {
+      step2.style.display = "none";
+      options.style.display = "flex";
+    };
+
+    function respond(answer) {
+      options.style.display = "none";
+      finalMsg.style.display = "block";
+      guide.style.display = "block";
+    }
+
+    function playLoveScene() {
+      music.play();
+      guide.innerText = "Semoga kamu suka lagunya 💜";
+
+      const images = ['img1.jpeg', 'img2.jpeg', 'img3.jpeg', 'img4.jpeg'];
+      setInterval(() => {
+        const el = document.createElement("div");
+        el.className = "float-img";
+        const img = document.createElement("img");
+        img.src = images[Math.floor(Math.random() * images.length)];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.top = "100vh";
+        el.style.animationDuration = (6 + Math.random() * 4) + "s";
+        el.appendChild(img);
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 10000);
+      }, 700);
+
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "float-love";
+        heart.innerText = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "100vh";
+        heart.style.animationDuration = (5 + Math.random() * 3) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 10000);
+      }, 500);
+    }
+  </script>
+</body>
+</html>
